@@ -8,11 +8,11 @@ class SpecialSaleEvent {
   }
 
   #checkIncludeEventDate(visitDate) {
-    const specialDay = [...EVENT_PLANNER.specialDay];
+    const specialDate = [...EVENT_PLANNER.specialDate];
 
-    const isSpecialDay = specialDay.find((day) => day === visitDate);
+    const isSpecialDate = specialDate.find((date) => date === visitDate);
 
-    return isSpecialDay ? SALE_PRIZE.specialSale : EMPTY_COUNT;
+    return isSpecialDate ? SALE_PRIZE.specialSale : EMPTY_COUNT;
   }
 
   getSpecialSalePrice() {
