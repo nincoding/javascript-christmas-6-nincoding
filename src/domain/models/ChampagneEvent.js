@@ -1,26 +1,28 @@
+import { PRESENT_EVENT_CONDITION, CHAMPAGNE_PRIZE } from '../../constants/constant';
+
 class ChampagneEvent {
-  #champagne;
+  #champagneCount;
   #presentedPrice;
 
   constructor(orderAmount) {
-    this.#champagne = this.#countChampagne(orderAmount);
+    this.#champagneCount = this.#countChampagne(orderAmount);
     this.#presentedPrice = this.#calcPresentedPrice();
   }
 
   #countChampagne(orderAmount) {
-    if (orderAmount >= 120_000) {
-      return Math.trunc(orderAmount / 120_000);
+    if (orderAmount >= PRESENT_EVENT_CONDITION) {
+      return Math.trunc(orderAmount / PRESENT_EVENT_CONDITION);
     }
 
     return 0;
   }
 
   #calcPresentedPrice() {
-    return this.#champagne * 25_000;
+    return this.#champagneCount * CHAMPAGNE_PRIZE;
   }
 
   getChampagne() {
-    return this.#champagne;
+    return this.#champagneCount;
   }
 
   getPresentedPrice() {

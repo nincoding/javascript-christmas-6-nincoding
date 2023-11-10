@@ -1,16 +1,17 @@
-import { EMPTY_VALUE, USER_BADGE } from '../../constants/constant.js';
+import { EMPTY_VALUE, USER_BADGE, BADGE_PRIZE } from '../../constants/constant.js';
 
 class Badge {
   #Badge;
 
-  constructor(number) {
-    this.#Badge = this.calcBadge(number);
+  constructor(totalDiscountAmount) {
+    this.#Badge = this.#calcBadge(totalDiscountAmount);
   }
 
-  calcBadge(number) {
-    if (number >= 20_000) return USER_BADGE.santa;
-    if (number >= 10_000) return USER_BADGE.tree;
-    if (number >= 5_000) return USER_BADGE.star;
+  #calcBadge(totalDiscountAmount) {
+    if (totalDiscountAmount >= BADGE_PRIZE.santa) return USER_BADGE.santa;
+    if (totalDiscountAmount >= BADGE_PRIZE.tree) return USER_BADGE.tree;
+    if (totalDiscountAmount >= BADGE_PRIZE.star) return USER_BADGE.star;
+
     return EMPTY_VALUE;
   }
 
