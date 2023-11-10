@@ -1,3 +1,5 @@
+import { EVENT_PLANNER, SALE_PRIZE, EMPTY_COUNT } from '../../constants/constant.js';
+
 class SpecialSaleEvent {
   #specialSalePrice;
 
@@ -6,11 +8,11 @@ class SpecialSaleEvent {
   }
 
   #checkIncludeEventDate(visitDate) {
-    const specialDay = [3, 10, 17, 24, 25, 31];
+    const specialDay = [...EVENT_PLANNER.specialDay];
 
-    if (specialDay.includes(visitDate)) return 1_000;
+    const isSpecialDay = specialDay.find((day) => day === visitDate);
 
-    return 0;
+    return isSpecialDay ? SALE_PRIZE.specialSale : EMPTY_COUNT;
   }
 
   getSpecialSalePrice() {
