@@ -18,10 +18,14 @@ const PRESENT_EVENT_CONDITION = Object.freeze(120_000);
 const SALE_PRIZE = Object.freeze({
   champagneSale: 25_000,
   specialSale: 1_000,
+  startBasePrice: 1_000,
+  additionalPricePerDay: 1_00,
 });
 
 const EVENT_PLANNER = Object.freeze({
-  specialDay: [3, 10, 17, 24, 25, 31],
+  startDate: 1,
+  christmas: 25,
+  specialDate: [3, 10, 17, 24, 25, 31],
 });
 
 export {

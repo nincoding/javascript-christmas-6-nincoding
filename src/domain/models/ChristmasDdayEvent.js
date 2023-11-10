@@ -1,3 +1,5 @@
+import { SALE_PRIZE, EVENT_PLANNER, EMPTY_COUNT } from '../../constants/constant.js';
+
 class ChristmasDdayEvent {
   #christmasDdaySalePrice;
 
@@ -6,16 +8,14 @@ class ChristmasDdayEvent {
   }
 
   #countDdaySale(visitDate) {
-    const startDate = 1;
-    const endDate = 25;
-    const basePrice = 1000;
-    const additionalPricePerDay = 100;
-
-    if (visitDate <= endDate) {
-      return basePrice + additionalPricePerDay * (visitDate - startDate);
+    if (visitDate <= EVENT_PLANNER.christmas) {
+      return (
+        SALE_PRIZE.startBasePrice +
+        SALE_PRIZE.additionalPricePerDay * (visitDate - EVENT_PLANNER.startDate)
+      );
     }
 
-    return 0;
+    return EMPTY_COUNT;
   }
 
   getChristmasDdaySalePrice() {
