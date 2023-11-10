@@ -1,4 +1,4 @@
-import { PRESENT_EVENT_CONDITION, SALE_PRIZE, EMPTY_COUNT } from '../../constants/constant';
+import { PRESENT_EVENT_CONDITION, SALE_PRIZE, EMPTY_COUNT } from '../../constants/constant.js';
 
 class ChampagneEvent {
   #champagneCount;
