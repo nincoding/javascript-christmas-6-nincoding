@@ -32,6 +32,7 @@ const SALE_PRIZE = Object.freeze({
   specialSale: 1_000,
   startBasePrice: 1_000,
   additionalPricePerDay: 1_00,
+  dailySale: 2_023,
 });
 
 const EVENT_PLANNER = Object.freeze({
