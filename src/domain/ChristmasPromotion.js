@@ -1,3 +1,5 @@
+import * as PromotionModels from './models';
+
 class ChristmasPromotion {
   #totalOrderAmount;
   #promotionInfo;
