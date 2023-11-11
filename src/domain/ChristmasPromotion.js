@@ -35,7 +35,7 @@ class ChristmasPromotion {
   }
 
   calcEstimatedAmount(totalSaleAmount) {
-    return this.#totalOrderAmount - totalSaleAmount;
+    return this.#totalOrderAmount - totalSaleAmount + this.#totalSaleInfo.champagne;
   }
 
   #calcTotalOrderAmount() {
