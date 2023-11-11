@@ -28,6 +28,12 @@ class ChristmasPromotion {
     return this.#totalSaleInfo;
   }
 
+  calcTotalSaleAmount() {
+    const saleAmounts = Object.values(this.#totalSaleInfo);
+
+    return saleAmounts.reduce((total, amount) => total + amount, 0);
+  }
+
   #calcTotalOrderAmount() {
     return Object.entries(this.#orderReceipt)
       .map(([menuName, orderCount]) => MENU_PRIZE[menuName] * orderCount)
@@ -64,10 +70,6 @@ class ChristmasPromotion {
   }
 
   /*
-  getTotalSaleAmount() {
-    return this.#totalSaleAmount;
-  }
-
   getEstimatedAmount() {
     return this.#estimatedAmount;
   }
