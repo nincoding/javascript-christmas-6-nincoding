@@ -6,7 +6,7 @@ describe('ChristmasPromotion', () => {
 
   const createPromotion = (orderReceipt) => {
     christmasPromotion = new ChristmasPromotion(orderReceipt);
-    resultTotalOrderAmount = () => christmasPromotion.getTotalOrderAmount();
+    resultTotalOrderAmount = () => christmasPromotion.calctotalOrderAmount();
   };
 
   const totalOrderCases = [
