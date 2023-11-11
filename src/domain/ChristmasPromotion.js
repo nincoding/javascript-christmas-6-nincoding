@@ -1,4 +1,5 @@
-import * as PromotionModels from './models';
+import * as EventModels from './models';
+import { MENU_PRIZE } from '../constants/constant.js';
 
 class ChristmasPromotion {
   #totalOrderAmount;
@@ -6,7 +7,9 @@ class ChristmasPromotion {
   #totalSaleAmount;
   #estimatedAmount;
 
-  constructor() {}
+  constructor(orderReceipt) {
+    this.#totalOrderAmount = this.#calctotalOrderAmount(orderReceipt);
+  }
 
   getTotalOrderAmount() {
     return this.#totalOrderAmount;
@@ -22,6 +25,12 @@ class ChristmasPromotion {
 
   getEstimatedAmount() {
     return this.#estimatedAmount;
+  }
+
+  #calctotalOrderAmount(orderReceipt) {
+    return Object.entries(orderReceipt)
+      .map(([menuName, orderCount]) => MENU_PRIZE[menuName] * orderCount)
+      .reduce((total, amount) => total + amount, 0);
   }
 }
 
