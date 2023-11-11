@@ -34,6 +34,12 @@ const MENU_PRIZE = Object.freeze({
   샴페인: 25_000,
 });
 
+const INITIAL_SALE_INFO = Object.freeze({
+  christmasDday: 0,
+  special: 0,
+  champagne: 0,
+});
+
 const BADGE_PRIZE = Object.freeze({
   star: 5_000,
   tree: 10_000,
@@ -68,4 +74,5 @@ export {
   DAY,
   MENU,
   MENU_PRIZE,
+  INITIAL_SALE_INFO,
 };
