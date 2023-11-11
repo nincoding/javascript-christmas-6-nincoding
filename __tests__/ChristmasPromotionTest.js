@@ -5,18 +5,21 @@ describe('ChristmasPromotion', () => {
   let resultTotalOrderAmount;
   let resultTotalSaleInfo;
   let resultTotalSaleAmount;
+  let resultEstimatedAmount;
 
   const createPromotion = (visitDate, orderReceipt) => {
     christmasPromotion = new ChristmasPromotion(visitDate, orderReceipt);
     resultTotalOrderAmount = () => christmasPromotion.getTotalOrderAmount();
     resultTotalSaleInfo = () => christmasPromotion.getTotalSaleInfo();
     resultTotalSaleAmount = () => christmasPromotion.calcTotalSaleAmount();
+    resultEstimatedAmount = (totalSaleAmount) =>
+      christmasPromotion.calcEstimatedAmount(totalSaleAmount);
   };
 
   const totalOrderCases = [
-    [25, { 티본스테이크: 1, 바비큐립: 1, 초코케이크: 2, 제로콜라: 1 }, 142_000],
-    [3, { 타파스: 1, 제로콜라: 1 }, 8_500],
-    [1, { 양송이수프: 1, 해산물파스타: 1 }, 41_000],
+    [25, { 티본스테이크: 1, 바비큐립: 1, 초코케이크: 2, 제로콜라: 1 }, 142_000, 31_246, 110_754],
+    [3, { 타파스: 1, 제로콜라: 1 }, 8_500, 0, 8_500],
+    [1, { 양송이수프: 1, 해산물파스타: 1 }, 41_000, 3_023, 37_977],
   ];
 
   const totalInfoCases = [
@@ -46,7 +49,7 @@ describe('ChristmasPromotion', () => {
 
   test.each(totalInfoCases)(
     '적용된 이벤트 할인들의 총 혜택 금액이 알맞게 계산되는지 테스트한다.',
-    (visitDate, orderReceipt, expectedInfo, _) => {
+    (visitDate, orderReceipt, expectedInfo) => {
       createPromotion(visitDate, orderReceipt);
 
       expect(resultTotalSaleInfo()).toStrictEqual(expectedInfo);
@@ -59,6 +62,15 @@ describe('ChristmasPromotion', () => {
       createPromotion(visitDate, orderReceipt);
 
       expect(resultTotalSaleAmount()).toBe(expectedAmount);
+    }
+  );
+
+  test.each(totalOrderCases)(
+    '할인 후 예상 결제 금액이 알맞게 계산되어 반환되는지 테스트한다.',
+    (visitDate, orderReceipt, _, totalSaleAmount, expectedAmount) => {
+      createPromotion(visitDate, orderReceipt);
+
+      expect(resultEstimatedAmount(totalSaleAmount)).toBe(expectedAmount);
     }
   );
 });
