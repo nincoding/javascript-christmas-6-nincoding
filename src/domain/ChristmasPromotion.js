@@ -34,6 +34,10 @@ class ChristmasPromotion {
     return saleAmounts.reduce((total, amount) => total + amount, 0);
   }
 
+  calcEstimatedAmount(totalSaleAmount) {
+    return this.#totalOrderAmount - totalSaleAmount;
+  }
+
   #calcTotalOrderAmount() {
     return Object.entries(this.#orderReceipt)
       .map(([menuName, orderCount]) => MENU_PRIZE[menuName] * orderCount)
@@ -68,12 +72,6 @@ class ChristmasPromotion {
   #setPresentedChampagne(events) {
     return (this.#presentedChampagne = events.champagne.getChampagne());
   }
-
-  /*
-  getEstimatedAmount() {
-    return this.#estimatedAmount;
-  }
-  */
 }
 
 export default ChristmasPromotion;
