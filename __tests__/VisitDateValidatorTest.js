@@ -1,7 +1,8 @@
 import VisitDateValidator from '../src/domain/validators/visitDateValidator.js';
+import { ERROR_MESSAGE } from '../src/constants/errorMessage.js';
 
 describe('VisitDateValidator', () => {
-  const invalidErrorMessage = () => `[ERROR] 유효하지 않은 날짜입니다.`;
+  const invalidErrorMessage = () => ERROR_MESSAGE.invalidDate;
 
   const invalidTestData = [0, 32, '1a', 1.5, '', 'abc'];
 
