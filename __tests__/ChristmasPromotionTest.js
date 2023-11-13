@@ -15,7 +15,6 @@ describe('ChristmasPromotion', () => {
       0,
       {
         '크리스마스 디데이 할인': 0,
-        '평일 할인': 0,
         '특별 할인': 0,
         '증정 이벤트': 0,
       },
@@ -72,7 +71,7 @@ describe('ChristmasPromotion', () => {
     (visitDate, orderReceipt, _, __, ___, expected) => {
       createPromotion(visitDate, orderReceipt);
 
-      expect(christmasPromotion.calcTotalSaleAmount()).toBe(expected);
+      expect(christmasPromotion.getTotalSaleAmount()).toBe(expected);
     }
   );
 
