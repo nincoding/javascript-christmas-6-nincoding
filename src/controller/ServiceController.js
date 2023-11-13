@@ -14,6 +14,29 @@ class ServiceController {
   async startService() {
     const visitDate = await this.requireVisitDate();
     const orderMenu = await this.requireOrderMenu();
+
+    this.#service = new ChristmasPromotion(visitDate, orderMenu);
+
+    OutputView.printPreviewbenefits(visitDate);
+    OutputView.printOrderMenuInfo(orderMenu);
+
+    const totalOrderAmount = this.#service.getTotalOrderAmount();
+    OutputView.printTotalOrderAmount(totalOrderAmount);
+
+    const presentedChampagne = this.#service.getPresentedChampagne();
+    OutputView.printPresentedMenu(presentedChampagne);
+
+    const totalSaleInfo = this.#service.getTotalSaleInfo();
+    OutputView.printTotalSaleInfo(totalSaleInfo);
+
+    const totalSaleAmount = this.#service.calcTotalSaleAmount();
+    OutputView.printTotalSaleAmount(totalSaleAmount);
+
+    const estimatedAmount = this.#service.calcEstimatedAmount(totalSaleAmount);
+    OutputView.printEstimatedAmount(estimatedAmount);
+
+    const badge = this.#service.getBadge();
+    OutputView.printBadge(badge);
   }
 
   async requireVisitDate() {
