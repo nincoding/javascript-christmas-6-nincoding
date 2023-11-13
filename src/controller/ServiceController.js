@@ -3,66 +3,71 @@ import OrderMenuValidator from '../domain/validators/OrderMenuValidator.js';
 import VisitDateValidator from '../domain/validators/visitDateValidator.js';
 import InputView from '../views/InputView.js';
 import OutputView from '../views/OutputView.js';
+import errorHandler from '../utils/errorHandler.js';
 
 class ServiceController {
   #service;
+  #visitDate;
+  #orderMenu;
 
   constructor() {
     OutputView.printStartService();
   }
 
   async startService() {
-    const visitDate = await this.requireVisitDate();
-    const orderMenu = await this.requireOrderMenu();
+    const printError = (message) => OutputView.printErrorMessage(message);
 
-    this.#service = new ChristmasPromotion(visitDate, orderMenu);
+    await errorHandler(async () => await this.#requireValidVisitDate(), printError);
+    await errorHandler(async () => await this.#requireValidOrderMenu(), printError);
 
-    OutputView.printPreviewbenefits(visitDate);
-    OutputView.printOrderMenuInfo(orderMenu);
+    this.#service = new ChristmasPromotion(this.#visitDate, this.#orderMenu);
+    const promotionData = this.#initPromotionServiceData();
 
+    this.#printPromotionService(promotionData);
+  }
+
+  async #requireValidVisitDate() {
+    const inputVisitDate = await InputView.getVisitDate();
+    VisitDateValidator.validate(inputVisitDate);
+
+    this.#visitDate = inputVisitDate;
+  }
+
+  async #requireValidOrderMenu() {
+    const inputOrderMenu = await InputView.getOrderMenu();
+    OrderMenuValidator.validate(inputOrderMenu);
+
+    this.#orderMenu = inputOrderMenu;
+  }
+
+  #initPromotionServiceData() {
     const totalOrderAmount = this.#service.getTotalOrderAmount();
-    OutputView.printTotalOrderAmount(totalOrderAmount);
-
     const presentedChampagne = this.#service.getPresentedChampagne();
-    OutputView.printPresentedMenu(presentedChampagne);
-
     const totalSaleInfo = this.#service.getTotalSaleInfo();
-    OutputView.printTotalSaleInfo(totalSaleInfo);
-
     const totalSaleAmount = this.#service.getTotalSaleAmount();
-    OutputView.printTotalSaleAmount(totalSaleAmount);
-
-    const estimatedAmount = this.#service.getEstimatedAmount(totalSaleAmount);
-    OutputView.printEstimatedAmount(estimatedAmount);
-
+    const estimatedAmount = this.#service.getEstimatedAmount();
     const badge = this.#service.getBadge();
-    OutputView.printBadge(badge);
+
+    return {
+      totalOrderAmount,
+      presentedChampagne,
+      totalSaleInfo,
+      totalSaleAmount,
+      estimatedAmount,
+      badge,
+    };
   }
 
-  async requireVisitDate() {
-    while (true) {
-      try {
-        const visitDate = await InputView.getVisitDate();
-        VisitDateValidator.validate(visitDate);
+  #printPromotionService(promotionData) {
+    OutputView.printPreviewbenefits(this.#visitDate);
+    OutputView.printOrderMenuInfo(this.#orderMenu);
 
-        return visitDate;
-      } catch ({ message }) {
-        OutputView.printErrorMessage(message);
-      }
-    }
-  }
-
-  async requireOrderMenu() {
-    while (true) {
-      try {
-        const orderMenu = await InputView.getOrderMenu();
-        OrderMenuValidator.validate(orderMenu);
-
-        return orderMenu;
-      } catch ({ message }) {
-        OutputView.printErrorMessage(message);
-      }
-    }
+    OutputView.printTotalOrderAmount(promotionData.totalOrderAmount);
+    OutputView.printPresentedMenu(promotionData.presentedChampagne);
+    OutputView.printTotalSaleInfo(promotionData.totalSaleInfo);
+    OutputView.printTotalSaleAmount(promotionData.totalSaleAmount);
+    OutputView.printEstimatedAmount(promotionData.estimatedAmount);
+    OutputView.printBadge(promotionData.badge);
   }
 }
 
