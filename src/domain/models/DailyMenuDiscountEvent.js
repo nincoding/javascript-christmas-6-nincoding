@@ -19,13 +19,14 @@ class DailyMenuDiscountEvent {
 
   #distinguishVisitDay(visitDate) {
     const visitWeekEnd = EVENT_PLANNER.weekends.includes(visitDate);
+
     return visitWeekEnd ? DAY.weekend : DAY.weekday;
   }
 
   #dailyMenuDiscount(orderReceipt) {
-    return this.#visitDay === DAY.weekend
-      ? this.#calculateDiscount(orderReceipt, MENU.mainDish)
-      : this.#calculateDiscount(orderReceipt, MENU.dessert);
+    const menuCategory = this.#visitDay === DAY.weekend ? MENU.mainDish : MENU.dessert;
+
+    return this.#calculateDiscount(orderReceipt, menuCategory);
   }
 
   #calculateDiscount(orderReceipt, menuCategory) {
@@ -39,18 +40,20 @@ class DailyMenuDiscountEvent {
   }
 
   #isContainMenu(orderReceipt, menuCategory) {
-    const menuNames = Object.keys(orderReceipt);
+    return orderReceipt.some((order) => {
+      const menuName = Object.keys(order)[0];
 
-    return menuNames.some((menuName) => menuCategory.has(menuName));
+      return menuCategory.has(menuName);
+    });
   }
 
   #calculateTotalMenuCount(orderReceipt, menuCategory) {
-    const menuNames = Object.keys(orderReceipt);
+    return orderReceipt.reduce((total, order) => {
+      const menuName = Object.keys(order)[0];
+      const orderCount = order[menuName];
 
-    return menuNames.reduce(
-      (total, menuName) => (menuCategory.has(menuName) ? total + orderReceipt[menuName] : total),
-      EMPTY_COUNT
-    );
+      return menuCategory.has(menuName) ? total + orderCount : total;
+    }, EMPTY_COUNT);
   }
 }
 
