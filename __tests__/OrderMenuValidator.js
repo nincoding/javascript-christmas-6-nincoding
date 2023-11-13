@@ -3,8 +3,6 @@ import { ERROR_MESSAGE } from '../src/constants/errorMessage.js';
 
 describe('OrderMenuValidator', () => {
   const invalidOrderMessage = () => ERROR_MESSAGE.invalidOrder;
-  const invalidOnlyDrinkMessage = () => ERROR_MESSAGE.invalidOnlyDrink;
-  const invalidMaximumMenuMessage = () => ERROR_MESSAGE.invalidMaximumMenu;
 
   const invalidOrderTestData = [
     {
@@ -28,11 +26,11 @@ describe('OrderMenuValidator', () => {
   const invalidOnlyDrinkTestData = [
     {
       orderMenu: [{ 레드와인: 1 }],
-      expectedErrorMessage: invalidOnlyDrinkMessage(),
+      expectedErrorMessage: invalidOrderMessage(),
     },
     {
       orderMenu: [{ 레드와인: 1 }, { 샴페인: 1 }],
-      expectedErrorMessage: invalidOnlyDrinkMessage(),
+      expectedErrorMessage: invalidOrderMessage(),
     },
   ];
 
@@ -43,7 +41,7 @@ describe('OrderMenuValidator', () => {
     },
     {
       orderMenu: [{ 해산물파스타: 10 }, { 레드와인: 10 }, { 샴페인: 1 }],
-      expectedErrorMessage: invalidMaximumMenuMessage(),
+      expectedErrorMessage: invalidOrderMessage(),
     },
   ];
 
