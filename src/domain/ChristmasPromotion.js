@@ -6,15 +6,17 @@ class ChristmasPromotion {
   #orderReceipt;
   #totalOrderAmount;
   #totalSaleInfo;
-  #presentedChampagne;
   #totalSaleAmount;
+  #presentedChampagne;
 
   constructor(visitDate, orderReceipt) {
     this.#visitDate = visitDate;
     this.#orderReceipt = orderReceipt;
     this.#totalOrderAmount = this.#calcTotalOrderAmount();
-    this.#totalSaleInfo = this.#calcTotalSaleInfo(this.#initEvent());
-    this.#totalSaleAmount = this.calcTotalSaleAmount();
+    this.#totalSaleInfo = this.#isEventCondition()
+      ? this.#calcTotalSaleInfo(this.#initEvent())
+      : INITIAL_SALE_INFO;
+    this.#totalSaleAmount = this.#isEventCondition() ? this.#calcTotalSaleAmount() : 0;
     this.#presentedChampagne = this.#setPresentedChampagne(this.#initEvent());
   }
 
@@ -30,18 +32,28 @@ class ChristmasPromotion {
     return this.#totalSaleInfo;
   }
 
-  getBadge() {
-    return this.#makeBadge(this.#initEvent());
+  getTotalSaleAmount() {
+    return this.#totalSaleAmount;
   }
 
-  calcTotalSaleAmount() {
+  getEstimatedAmount() {
+    return (
+      this.#totalOrderAmount - this.#totalSaleAmount + this.#totalSaleInfo[PROMOTION_KEY.champagne]
+    );
+  }
+
+  getBadge() {
+    return this.#isEventCondition ? this.#makeBadge(this.#initEvent()) : '없음';
+  }
+
+  #isEventCondition() {
+    return this.#totalOrderAmount >= 10_000;
+  }
+
+  #calcTotalSaleAmount() {
     const saleAmounts = Object.values(this.#totalSaleInfo);
 
     return saleAmounts.reduce((total, amount) => total + amount, 0);
-  }
-
-  calcEstimatedAmount(totalSaleAmount) {
-    return this.#totalOrderAmount - totalSaleAmount + this.#totalSaleInfo[PROMOTION_KEY.champagne];
   }
 
   #calcTotalOrderAmount() {

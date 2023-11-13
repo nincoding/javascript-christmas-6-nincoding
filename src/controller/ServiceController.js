@@ -29,10 +29,10 @@ class ServiceController {
     const totalSaleInfo = this.#service.getTotalSaleInfo();
     OutputView.printTotalSaleInfo(totalSaleInfo);
 
-    const totalSaleAmount = this.#service.calcTotalSaleAmount();
+    const totalSaleAmount = this.#service.getTotalSaleAmount();
     OutputView.printTotalSaleAmount(totalSaleAmount);
 
-    const estimatedAmount = this.#service.calcEstimatedAmount(totalSaleAmount);
+    const estimatedAmount = this.#service.getEstimatedAmount(totalSaleAmount);
     OutputView.printEstimatedAmount(estimatedAmount);
 
     const badge = this.#service.getBadge();
