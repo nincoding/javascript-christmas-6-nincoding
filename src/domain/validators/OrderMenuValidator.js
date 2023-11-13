@@ -10,9 +10,9 @@ class OrderMenuValidator {
 
     throwValidationError(!this.isContainAllMenu(menuNames), ERROR_MESSAGE.invalidOrder);
     throwValidationError(!this.isUniqeMenuName(menuNames), ERROR_MESSAGE.invalidOrder);
-    throwValidationError(this.isOnlyDrinks(menuNames), ERROR_MESSAGE.invalidOnlyDrink);
+    throwValidationError(this.isOnlyDrinks(menuNames), ERROR_MESSAGE.invalidOrder);
     throwValidationError(!this.isValidateOrderCount(orderCounts), ERROR_MESSAGE.invalidOrder);
-    throwValidationError(!this.isValidTotalCount(orderCounts), ERROR_MESSAGE.invalidMaximumMenu);
+    throwValidationError(!this.isValidTotalCount(orderCounts), ERROR_MESSAGE.invalidOrder);
   }
 
   // 주문한 메뉴들이 메뉴판에 모두 포함되어 있는지 검증한다.
