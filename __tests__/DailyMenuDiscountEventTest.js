@@ -12,9 +12,9 @@ describe('DailyMenuDiscountEvent', () => {
     resultDailySalePrice = () => dailyMenuDiscountEvent.getDailySalePrice();
   };
 
-  const orderReceipt = { 티본스테이크: 2, 초코케이크: 2, 바비큐립: 1, 양송이수프: 3 };
-  const emptyMainOrder = { 양송이수프: 1, 아이스크림: 1 };
-  const emptyDessertOrder = { 양송이수프: 1, 해산물파스타: 1 };
+  const orderReceipt = [{ 티본스테이크: 2 }, { 초코케이크: 2 }, { 바비큐립: 1 }, { 양송이수프: 3 }];
+  const emptyMainOrder = [{ 양송이수프: 1 }, { 아이스크림: 1 }];
+  const emptyDessertOrder = [{ 양송이수프: 1 }, { 해산물파스타: 1 }];
 
   const weekdayTestCases = [
     [3, orderReceipt, DAY.weekday, 4_046],
