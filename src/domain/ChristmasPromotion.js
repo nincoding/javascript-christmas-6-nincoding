@@ -7,12 +7,14 @@ class ChristmasPromotion {
   #totalOrderAmount;
   #totalSaleInfo;
   #presentedChampagne;
+  #totalSaleAmount;
 
   constructor(visitDate, orderReceipt) {
     this.#visitDate = visitDate;
     this.#orderReceipt = orderReceipt;
     this.#totalOrderAmount = this.#calcTotalOrderAmount();
     this.#totalSaleInfo = this.#calcTotalSaleInfo(this.#initEvent());
+    this.#totalSaleAmount = this.calcTotalSaleAmount();
     this.#presentedChampagne = this.#setPresentedChampagne(this.#initEvent());
   }
 
@@ -28,6 +30,10 @@ class ChristmasPromotion {
     return this.#totalSaleInfo;
   }
 
+  getBadge() {
+    return this.#makeBadge(this.#initEvent());
+  }
+
   calcTotalSaleAmount() {
     const saleAmounts = Object.values(this.#totalSaleInfo);
 
@@ -39,7 +45,8 @@ class ChristmasPromotion {
   }
 
   #calcTotalOrderAmount() {
-    return Object.entries(this.#orderReceipt)
+    return this.#orderReceipt
+      .flatMap((order) => Object.entries(order))
       .map(([menuName, orderCount]) => MENU_PRIZE[menuName] * orderCount)
       .reduce((total, amount) => total + amount, 0);
   }
@@ -52,7 +59,8 @@ class ChristmasPromotion {
     );
     const specialSale = new EventModels.SpecialSaleEvent(this.#visitDate);
     const champagne = new EventModels.ChampagneEvent(this.#totalOrderAmount);
-    const events = { christmasDday, dailyMenuDiscount, specialSale, champagne };
+    const badge = new EventModels.BadgeEvent(this.#totalSaleAmount);
+    const events = { christmasDday, dailyMenuDiscount, specialSale, champagne, badge };
 
     return events;
   }
@@ -71,6 +79,10 @@ class ChristmasPromotion {
 
   #setPresentedChampagne(events) {
     return (this.#presentedChampagne = events.champagne.getChampagne());
+  }
+
+  #makeBadge(events) {
+    return events.badge.getBadge();
   }
 }
 
