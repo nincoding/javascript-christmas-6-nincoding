@@ -34,10 +34,19 @@ const MENU_PRIZE = Object.freeze({
   샴페인: 25_000,
 });
 
+const PROMOTION_KEY = Object.freeze({
+  christmasDday: '크리스마스 디데이 할인',
+  visitDate: (visitDay) => {
+    return `${visitDay} 할인`;
+  },
+  special: '특별 할인',
+  champagne: '증정 이벤트',
+});
+
 const INITIAL_SALE_INFO = Object.freeze({
-  christmasDday: 0,
-  special: 0,
-  champagne: 0,
+  [PROMOTION_KEY.christmasDday]: 0,
+  [PROMOTION_KEY.special]: 0,
+  [PROMOTION_KEY.champagne]: 0,
 });
 
 const BADGE_PRIZE = Object.freeze({
@@ -75,4 +84,5 @@ export {
   MENU,
   MENU_PRIZE,
   INITIAL_SALE_INFO,
+  PROMOTION_KEY,
 };

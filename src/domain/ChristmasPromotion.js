@@ -1,5 +1,5 @@
 import * as EventModels from './models/index.js';
-import { MENU_PRIZE, INITIAL_SALE_INFO } from '../constants/constant.js';
+import { MENU_PRIZE, INITIAL_SALE_INFO, PROMOTION_KEY } from '../constants/constant.js';
 
 class ChristmasPromotion {
   #visitDate;
@@ -35,7 +35,7 @@ class ChristmasPromotion {
   }
 
   calcEstimatedAmount(totalSaleAmount) {
-    return this.#totalOrderAmount - totalSaleAmount + this.#totalSaleInfo.champagne;
+    return this.#totalOrderAmount - totalSaleAmount + this.#totalSaleInfo[PROMOTION_KEY.champagne];
   }
 
   #calcTotalOrderAmount() {
@@ -61,10 +61,10 @@ class ChristmasPromotion {
     const totalSaleInfo = { ...INITIAL_SALE_INFO };
     const visitDay = events.dailyMenuDiscount.getVisitDay();
 
-    totalSaleInfo.christmasDday = events.christmasDday.getChristmasDdaySalePrice();
-    totalSaleInfo[visitDay] = events.dailyMenuDiscount.getDailySalePrice();
-    totalSaleInfo.special = events.specialSale.getSpecialSalePrice();
-    totalSaleInfo.champagne = events.champagne.getPresentedPrice();
+    totalSaleInfo[PROMOTION_KEY.christmasDday] = events.christmasDday.getChristmasDdaySalePrice();
+    totalSaleInfo[PROMOTION_KEY.visitDate(visitDay)] = events.dailyMenuDiscount.getDailySalePrice();
+    totalSaleInfo[PROMOTION_KEY.special] = events.specialSale.getSpecialSalePrice();
+    totalSaleInfo[PROMOTION_KEY.champagne] = events.champagne.getPresentedPrice();
 
     return totalSaleInfo;
   }
