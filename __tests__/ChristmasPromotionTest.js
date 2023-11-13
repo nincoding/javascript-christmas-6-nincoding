@@ -77,10 +77,10 @@ describe('ChristmasPromotion', () => {
 
   test.each(totalTestCases)(
     '할인이 적용된 후 예상 결제 금액이 정확히 계산되는지 테스트한다.',
-    (visitDate, orderReceipt, _, __, ___, totalSaleAmount, expectedAmount) => {
+    (visitDate, orderReceipt, _, __, ___, _____, expectedAmount) => {
       createPromotion(visitDate, orderReceipt);
 
-      expect(christmasPromotion.calcEstimatedAmount(totalSaleAmount)).toBe(expectedAmount);
+      expect(christmasPromotion.getEstimatedAmount()).toBe(expectedAmount);
     }
   );
 
