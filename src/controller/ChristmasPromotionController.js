@@ -1,33 +1,39 @@
-import ChristmasPromotion from '../domain/ChristmasPromotion.js';
 import OrderMenuValidator from '../domain/validators/OrderMenuValidator.js';
 import VisitDateValidator from '../domain/validators/visitDateValidator.js';
 import InputView from '../views/InputView.js';
 import OutputView from '../views/OutputView.js';
 import errorHandler from '../utils/errorHandler.js';
 
-class ServiceController {
+class ChristmasPromotionController {
   #service;
   #visitDate;
   #orderMenu;
 
-  constructor() {
+  constructor(ChristmasPromotion) {
+    this.#service = ChristmasPromotion;
+
     OutputView.printStartService();
   }
 
   async startService() {
-    const printError = (message) => OutputView.printErrorMessage(message);
+    await this.#initService();
 
-    await errorHandler(async () => await this.#requireValidVisitDate(), printError);
-    await errorHandler(async () => await this.#requireValidOrderMenu(), printError);
-
-    this.#service = new ChristmasPromotion(this.#visitDate, this.#orderMenu);
-    const promotionData = this.#initPromotionServiceData();
+    this.#service = new this.#service(this.#visitDate, this.#orderMenu);
+    const promotionData = this.#getPromotionServiceData();
 
     this.#printPromotionService(promotionData);
   }
 
+  async #initService() {
+    const printError = (message) => OutputView.printErrorMessage(message);
+
+    await errorHandler(async () => await this.#requireValidVisitDate(), printError);
+    await errorHandler(async () => await this.#requireValidOrderMenu(), printError);
+  }
+
   async #requireValidVisitDate() {
     const inputVisitDate = await InputView.getVisitDate();
+
     VisitDateValidator.validate(inputVisitDate);
 
     this.#visitDate = inputVisitDate;
@@ -35,12 +41,13 @@ class ServiceController {
 
   async #requireValidOrderMenu() {
     const inputOrderMenu = await InputView.getOrderMenu();
+
     OrderMenuValidator.validate(inputOrderMenu);
 
     this.#orderMenu = inputOrderMenu;
   }
 
-  #initPromotionServiceData() {
+  #getPromotionServiceData() {
     const totalOrderAmount = this.#service.getTotalOrderAmount();
     const presentedChampagne = this.#service.getPresentedChampagne();
     const totalSaleInfo = this.#service.getTotalSaleInfo();
@@ -71,4 +78,4 @@ class ServiceController {
   }
 }
 
-export default ServiceController;
+export default ChristmasPromotionController;

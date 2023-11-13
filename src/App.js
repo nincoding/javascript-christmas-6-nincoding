@@ -1,17 +1,15 @@
 import ChristmasPromotion from './domain/ChristmasPromotion.js';
-import InputView from './views/InputView.js';
-import OutputView from './views/OutputView.js';
-import ServiceController from './controller/ServiceController.js';
+import ChristmasPromotionController from './controller/ChristmasPromotionController.js';
 
 class App {
-  #serviceController;
+  #controller;
 
   constructor() {
-    this.#serviceController = new ServiceController();
+    this.#controller = new ChristmasPromotionController(ChristmasPromotion);
   }
 
   async run() {
-    await this.#serviceController.startService();
+    await this.#controller.startService();
   }
 }
 
