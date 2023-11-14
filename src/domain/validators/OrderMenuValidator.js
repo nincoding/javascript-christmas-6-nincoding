@@ -1,6 +1,7 @@
 import throwValidationError from '../../utils/throwValidationError.js';
 import { isNumeric, isInteger } from '../../utils/numericValidation.js';
-import { MENU } from '../../constants/constant.js';
+import { MENU, EMPTY_COUNT } from '../../constants/constant.js';
+import { VALID_CONDITION } from '../../constants/conditions.js';
 import { ERROR_MESSAGE } from '../../constants/errorMessage.js';
 
 class OrderMenuValidator {
@@ -15,7 +16,11 @@ class OrderMenuValidator {
     throwValidationError(!this.isValidTotalCount(orderCounts), ERROR_MESSAGE.invalidOrder);
   }
 
-  // 주문한 메뉴들이 메뉴판에 모두 포함되어 있는지 검증한다.
+  /**
+   * 주문한 메뉴들이 메뉴판에 모두 포함되어 있는지 검증한다.
+   * @param {Array} menuNames - 주문한 메뉴들의 이름배열
+   * @returns {boolean} - 모두 포함되어 있으면 true를 반환한다.
+   */
   static isContainAllMenu(menuNames) {
     return menuNames.every((menuName) => this.isContainCategory(menuName));
   }
@@ -36,7 +41,11 @@ class OrderMenuValidator {
     return menuNames.every((menuName) => MENU.drink.has(menuName));
   }
 
-  // 주문할 수 있는 개수의 범위를 검증한다.
+  /**
+   * 주문할 수 있는 개수의 모든 유효성을 검증한다.
+   * @param {Array} orderCounts - 주문한 개수들의 숫자배열
+   * @returns {boolean} 모두 범위에 유효한 숫자인 경우 true를 반환한다.
+   */
   static isValidateOrderCount(orderCounts) {
     return orderCounts.every((count) => {
       return this.isValidRange(count) && isNumeric(count) && isInteger(count);
@@ -45,14 +54,14 @@ class OrderMenuValidator {
 
   // 주문 개수의 범위를 검증한다.
   static isValidRange(count) {
-    return count >= 1 && count <= 20;
+    return count >= VALID_CONDITION.minOrder && count <= VALID_CONDITION.maxOrder;
   }
 
-  // 주문 개수의 총합 수량을 검증한다.
+  // 주문 개수의 총합 수량이 최대 범위를 넘지 않는지 검증한다.
   static isValidTotalCount(orderCounts) {
-    const totalMenuCount = orderCounts.reduce((acc, count) => acc + count, 0);
+    const totalMenuCount = orderCounts.reduce((acc, count) => acc + count, EMPTY_COUNT);
 
-    return totalMenuCount <= 20;
+    return totalMenuCount <= VALID_CONDITION.maxOrder;
   }
 }
 

@@ -1,4 +1,5 @@
-import { EMPTY_VALUE, USER_BADGE, BADGE_PRIZE } from '../../constants/constant.js';
+import { EMPTY_VALUE, USER_BADGE } from '../../constants/constant.js';
+import { BADGE_PRIZE } from '../../constants/conditions.js';
 
 class BadgeEvent {
   #Badge;

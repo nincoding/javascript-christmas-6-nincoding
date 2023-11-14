@@ -1,4 +1,5 @@
-import { EVENT_PLANNER, DAY, MENU, EMPTY_COUNT, SALE_PRIZE } from '../../constants/constant.js';
+import { DAY, MENU, EMPTY_COUNT } from '../../constants/constant.js';
+import { EVENT_PLANNER, SALE_PRIZE } from '../../constants/conditions.js';
 
 class DailyMenuDiscountEvent {
   #visitDay;

@@ -1,4 +1,5 @@
-import { SALE_PRIZE, EVENT_PLANNER, EMPTY_COUNT } from '../../constants/constant.js';
+import { EMPTY_COUNT } from '../../constants/constant.js';
+import { EVENT_PLANNER, SALE_PRIZE } from '../../constants/conditions.js';
 
 class ChristmasDdayEvent {
   #christmasDdaySalePrice;
