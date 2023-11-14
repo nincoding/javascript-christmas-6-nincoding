@@ -13,6 +13,7 @@ const OUTPUT_MESSAGE = Object.freeze({
   formatSaleAmount: (prefixMessage, amountString) => `${prefixMessage}-${amountString}원`,
   estimatedAmount: '<할인 후 예상 결제 금액>',
   eventBadge: '<12월 이벤트 배지>',
+  formatPositiveAmount: (prefixMessage, amountString) => `${prefixMessage}${amountString}원`,
 });
 
 export default OUTPUT_MESSAGE;

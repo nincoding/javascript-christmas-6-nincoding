@@ -101,12 +101,14 @@ const OutputView = {
     Console.print(`${prefixMessage}${badge}`);
   },
 
+  // 설명메세지와 원화 기준으로 금액을 함께 출력한다.
   printAmountMessage(prefixMessage, amount) {
-    const result = addCommaAmount(amount);
+    const amountString = addCommaAmount(amount);
 
-    return Console.print(`${prefixMessage}${result}원`);
+    Console.print(OUTPUT_MESSAGE.formatPositiveAmount(prefixMessage, amountString));
   },
 
+  // 앞 뒷줄에 개행을 추가한다.
   printPrefixMessage(prefixMessage) {
     return `\n${prefixMessage}\n`;
   },
