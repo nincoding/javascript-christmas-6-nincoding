@@ -7,6 +7,15 @@ class ChristmasDdayEvent {
     this.#christmasDdaySalePrice = this.#countDdaySale(visitDate);
   }
 
+  getChristmasDdaySalePrice() {
+    return this.#christmasDdaySalePrice;
+  }
+
+  /**
+   * 이벤트 시작일부터 방문날짜까지 1일씩 할인금액을 증가시킨다.
+   * @param {number} visitDate - 방문날짜
+   * @returns {number} christmasDdaySalePrice - 크리스마스 이벤트 할인 금액
+   */
   #countDdaySale(visitDate) {
     if (visitDate <= EVENT_PLANNER.christmas) {
       return (
@@ -16,10 +25,6 @@ class ChristmasDdayEvent {
     }
 
     return EMPTY_COUNT;
-  }
-
-  getChristmasDdaySalePrice() {
-    return this.#christmasDdaySalePrice;
   }
 }
 
