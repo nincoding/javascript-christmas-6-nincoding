@@ -1,5 +1,5 @@
 import OrderMenuValidator from '../domain/validators/OrderMenuValidator.js';
-import VisitDateValidator from '../domain/validators/visitDateValidator.js';
+import VisitDateValidator from '../domain/validators/VisitDateValidator.js';
 import InputView from '../views/InputView.js';
 import OutputView from '../views/OutputView.js';
 import errorHandler from '../utils/errorHandler.js';

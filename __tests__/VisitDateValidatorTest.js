@@ -1,4 +1,4 @@
-import VisitDateValidator from '../src/domain/validators/visitDateValidator.js';
+import VisitDateValidator from '../src/domain/validators/VisitDateValidator.js';
 import { ERROR_MESSAGE } from '../src/constants/errorMessage.js';
 
 describe('VisitDateValidator', () => {
