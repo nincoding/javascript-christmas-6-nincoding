@@ -1,6 +1,6 @@
 import { Console } from '@woowacourse/mission-utils';
 import formatOrderMenu from '../utils/formatOrderMenu.js';
-import { INPUT_MESSAGE } from '../constants/inputMessage.js';
+import INPUT_MESSAGE from '../constants/inputMessage.js';
 
 const InputView = {
   async getVisitDate() {

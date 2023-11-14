@@ -18,7 +18,6 @@ class ChristmasPromotionController {
   async startService() {
     await this.#initService();
 
-    this.#service = new this.#service(this.#visitDate, this.#orderMenu);
     const promotionData = this.#getPromotionServiceData();
 
     this.#printPromotionService(promotionData);
@@ -48,9 +47,9 @@ class ChristmasPromotionController {
   }
 
   #getPromotionServiceData() {
-    const totalOrderAmount = this.#service.getTotalOrderAmount();
+    const totalOrderAmount = this.#service.getTotalOrderAmount(this.#orderMenu);
     const presentedChampagne = this.#service.getPresentedChampagne();
-    const totalSaleInfo = this.#service.getTotalSaleInfo();
+    const totalSaleInfo = this.#service.getTotalSaleInfo(this.#visitDate, this.#orderMenu);
     const totalSaleAmount = this.#service.getTotalSaleAmount();
     const estimatedAmount = this.#service.getEstimatedAmount();
     const badge = this.#service.getBadge();

@@ -3,93 +3,103 @@ import ChristmasPromotion from '../src/domain/ChristmasPromotion.js';
 describe('ChristmasPromotion', () => {
   let christmasPromotion;
 
-  const createPromotion = (visitDate, orderReceipt) => {
-    christmasPromotion = new ChristmasPromotion(visitDate, orderReceipt);
-  };
+  beforeEach(() => {
+    christmasPromotion = new ChristmasPromotion();
+  });
 
-  const totalTestCases = [
-    [
-      26,
-      [{ 타파스: 1 }, { 제로콜라: 1 }],
-      8_500,
-      0,
-      {
+  const testCases = [
+    {
+      visitDate: 26,
+      orderMenu: [{ 타파스: 1 }, { 제로콜라: 1 }],
+      totalOrderAmount: 8_500,
+      presentedChampagne: 0,
+      totalSaleInfo: {
         '크리스마스 디데이 할인': 0,
         '특별 할인': 0,
         '증정 이벤트': 0,
       },
-      0,
-      8_500,
-      '없음',
-    ],
-    [
-      3,
-      [{ 티본스테이크: 1 }, { 바비큐립: 1 }, { 초코케이크: 2 }, { 제로콜라: 1 }],
-      142_000,
-      1,
-      {
+      totalSaleAmount: 0,
+      estimatedAmount: 85_00,
+      badge: '없음',
+    },
+    {
+      visitDate: 3,
+      orderMenu: [{ 티본스테이크: 1 }, { 바비큐립: 1 }, { 초코케이크: 2 }, { 제로콜라: 1 }],
+      totalOrderAmount: 142_000,
+      presentedChampagne: 1,
+      totalSaleInfo: {
         '크리스마스 디데이 할인': 1_200,
         '평일 할인': 4_046,
         '특별 할인': 1_000,
         '증정 이벤트': 25_000,
       },
-      31_246,
-      135_754,
-      '산타',
-    ],
+      totalSaleAmount: 31_246,
+      estimatedAmount: 135_754,
+      badge: '산타',
+    },
   ];
 
-  test.each(totalTestCases)(
+  test.each(testCases)(
     '총 주문 금액이 정확히 계산되는지 테스트한다.',
-    (visitDate, orderReceipt, expected) => {
-      createPromotion(visitDate, orderReceipt);
-
-      expect(christmasPromotion.getTotalOrderAmount()).toBe(expected);
+    ({ orderMenu, totalOrderAmount }) => {
+      expect(christmasPromotion.getTotalOrderAmount(orderMenu)).toBe(totalOrderAmount);
     }
   );
 
-  test.each(totalTestCases)(
+  test.each(testCases)(
     '증정 샴페인 개수가 정확히 계산되는지 테스트한다.',
-    (visitDate, orderReceipt, _, expected) => {
-      createPromotion(visitDate, orderReceipt);
+    ({ orderMenu, presentedChampagne }) => {
+      christmasPromotion.getTotalOrderAmount(orderMenu);
 
-      expect(christmasPromotion.getPresentedChampagne()).toBe(expected);
+      expect(christmasPromotion.getPresentedChampagne()).toBe(presentedChampagne);
     }
   );
 
-  test.each(totalTestCases)(
+  test.each(testCases)(
     '혜택 내역 정보가 정확히 계산되는지 테스트한다.',
-    (visitDate, orderReceipt, _, __, expected) => {
-      createPromotion(visitDate, orderReceipt);
+    ({ visitDate, orderMenu, totalSaleInfo }) => {
+      christmasPromotion.getTotalOrderAmount(orderMenu);
+      christmasPromotion.getPresentedChampagne();
 
-      expect(christmasPromotion.getTotalSaleInfo()).toStrictEqual(expected);
+      expect(christmasPromotion.getTotalSaleInfo(visitDate, orderMenu)).toStrictEqual(
+        totalSaleInfo
+      );
     }
   );
 
-  test.each(totalTestCases)(
+  test.each(testCases)(
     '총 할인 금액이 정확히 계산되는지 테스트한다.',
-    (visitDate, orderReceipt, _, __, ___, expected) => {
-      createPromotion(visitDate, orderReceipt);
+    ({ visitDate, orderMenu, totalSaleAmount }) => {
+      christmasPromotion.getTotalOrderAmount(orderMenu);
+      christmasPromotion.getPresentedChampagne();
+      christmasPromotion.getTotalSaleInfo(visitDate, orderMenu);
 
-      expect(christmasPromotion.getTotalSaleAmount()).toBe(expected);
+      expect(christmasPromotion.getTotalSaleAmount()).toBe(totalSaleAmount);
     }
   );
 
-  test.each(totalTestCases)(
+  test.each(testCases)(
     '할인이 적용된 후 예상 결제 금액이 정확히 계산되는지 테스트한다.',
-    (visitDate, orderReceipt, _, __, ___, _____, expectedAmount) => {
-      createPromotion(visitDate, orderReceipt);
+    ({ visitDate, orderMenu, estimatedAmount }) => {
+      christmasPromotion.getTotalOrderAmount(orderMenu);
+      christmasPromotion.getPresentedChampagne();
+      christmasPromotion.getTotalSaleInfo(visitDate, orderMenu);
+      christmasPromotion.getTotalSaleAmount();
 
-      expect(christmasPromotion.getEstimatedAmount()).toBe(expectedAmount);
+      expect(christmasPromotion.getEstimatedAmount()).toBe(estimatedAmount);
     }
   );
 
-  test.each(totalTestCases)(
+  test.each(testCases)(
     '총 할인 금액을 기준으로 알맞는 배지를 반환하는지 테스트한다.',
-    (visitDate, orderReceipt, _, __, ___, ____, _____, expected) => {
-      createPromotion(visitDate, orderReceipt);
+    ({ visitDate, orderMenu, badge }) => {
+      christmasPromotion.getTotalOrderAmount(orderMenu);
+      christmasPromotion.getPresentedChampagne();
+      christmasPromotion.getTotalSaleInfo(visitDate, orderMenu);
+      christmasPromotion.getTotalSaleAmount();
+      christmasPromotion.getEstimatedAmount();
 
-      expect(christmasPromotion.getBadge()).toBe(expected);
+      expect(christmasPromotion.getBadge()).toBe(badge);
     }
   );
 });

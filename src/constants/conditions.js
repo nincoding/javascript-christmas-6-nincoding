@@ -1,11 +1,14 @@
 import { MENU_PRIZE } from './constant.js';
 
-const VALID_CONDITION = {
+const VALID_CONDITION = Object.freeze({
   minOrder: 1,
   maxOrder: 20,
-};
+});
 
-const PRESENT_EVENT_CONDITION = Object.freeze(120_000);
+const EVENT_CONDITION = Object.freeze({
+  moreOrderAmount: 10_000,
+  morePresentAmount: 120_000,
+});
 
 const EVENT_PLANNER = Object.freeze({
   startDate: 1,
@@ -29,4 +32,4 @@ const SALE_PRIZE = Object.freeze({
   dailySale: 2_023,
 });
 
-export { VALID_CONDITION, PRESENT_EVENT_CONDITION, EVENT_PLANNER, BADGE_PRIZE, SALE_PRIZE };
+export { VALID_CONDITION, EVENT_CONDITION, EVENT_PLANNER, BADGE_PRIZE, SALE_PRIZE };

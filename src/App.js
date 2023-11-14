@@ -5,7 +5,7 @@ class App {
   #controller;
 
   constructor() {
-    this.#controller = new ChristmasPromotionController(ChristmasPromotion);
+    this.#controller = new ChristmasPromotionController(new ChristmasPromotion());
   }
 
   async run() {

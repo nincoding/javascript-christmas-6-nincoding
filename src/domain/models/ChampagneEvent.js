@@ -1,5 +1,5 @@
 import { EMPTY_COUNT } from '../../constants/constant.js';
-import { PRESENT_EVENT_CONDITION, SALE_PRIZE } from '../../constants/conditions.js';
+import { EVENT_CONDITION, SALE_PRIZE } from '../../constants/conditions.js';
 
 class ChampagneEvent {
   #champagneCount;
@@ -24,11 +24,11 @@ class ChampagneEvent {
    * @returns {number} champagneCount - 증정 샴페인의 개수
    */
   #countChampagne(totalOrderAmount) {
-    if (totalOrderAmount >= PRESENT_EVENT_CONDITION) {
-      return Math.trunc(totalOrderAmount / PRESENT_EVENT_CONDITION);
-    }
+    const isEventCondition = totalOrderAmount >= EVENT_CONDITION.morePresentAmount;
 
-    return EMPTY_COUNT;
+    return isEventCondition
+      ? Math.trunc(totalOrderAmount / EVENT_CONDITION.morePresentAmount)
+      : EMPTY_COUNT;
   }
 
   /**
